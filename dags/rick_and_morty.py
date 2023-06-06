@@ -16,18 +16,18 @@ from plugins.rick_and_morty_operator import IBatjukov10RamLocationsOperator
 DEFAULT_ARGS = {
     'start_date': datetime(2022, 6, 1),
     'end_date': datetime(2022, 7, 30),
-    'owner': 'i-batjukov-10',
+    'owner': 'Igor Batyukov',
     'retries': 1,
     'poke_interval': 600
 }
 
 csv_path = '/tmp/ram.csv'
 
-with DAG("i-batjukov-10_ram_locations",
+with DAG("rick_and_morty",
          schedule_interval='@weekly',
          default_args=DEFAULT_ARGS,
          max_active_runs=1,
-         tags=['i-batjukov-10']
+         tags=['rick and morty']
          ) as dag:
 
     load_top_locations_to_csv = IBatjukov10RamLocationsOperator(
