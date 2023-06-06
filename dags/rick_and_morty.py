@@ -11,7 +11,7 @@ from datetime import datetime
 from airflow.hooks.postgres_hook import PostgresHook
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash import BashOperator
-from i_batjukov_10_plugins.i_batjukov_10_ram_locations_operator import IBatjukov10RamLocationsOperator
+from plugins.rick_and_morty_operator import IBatjukov10RamLocationsOperator
 
 DEFAULT_ARGS = {
     'start_date': datetime(2022, 6, 1),
