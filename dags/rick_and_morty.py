@@ -38,9 +38,16 @@ with DAG("i-batjukov-10_ram_locations",
 
 
     def load_csv_to_gp_func():
-        pg_hook = PostgresHook(postgres_conn_id='conn_greenplum_write')
-        pg_hook.run("TRUNCATE TABLE i_batjukov_10_ram_location;", False)
-        pg_hook.copy_expert("COPY i_batjukov_10_ram_location FROM STDIN DELIMITER ',';", csv_path)
+        pg_hook = PostgresHook(postgres_conn_id='postgres_pod')
+        pg_hook.run("""
+                    CREATE TABLE IF NOT EXISTS ram (dt varchar, 
+                                                    id varchar, 
+                                                    name varchar, 
+                                                    type varchar, 
+                                                    dimension varchar,
+                                                    residents varchar)
+                    """, False)
+        pg_hook.copy_expert("COPY ram FROM STDIN DELIMITER ',';", csv_path)
 
 
     load_csv_to_gp = PythonOperator(
