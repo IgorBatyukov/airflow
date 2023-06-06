@@ -8,7 +8,7 @@ My first custom Airflow operator
 import logging
 import csv
 from collections import defaultdict
-from rick_and_morty_hook import IBatjukov10RamLocationsHook
+from plugins.rick_and_morty_hook import IBatjukov10RamLocationsHook
 from airflow.models.baseoperator import BaseOperator
 from typing import Sequence
 
