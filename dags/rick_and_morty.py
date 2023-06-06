@@ -27,7 +27,7 @@ with DAG("rick_and_morty",
          schedule_interval='@weekly',
          default_args=DEFAULT_ARGS,
          max_active_runs=1,
-         tags=['rick and morty']
+         tags=['rick_and_morty']
          ) as dag:
 
     load_top_locations_to_csv = IBatjukov10RamLocationsOperator(
