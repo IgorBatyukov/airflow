@@ -1,7 +1,7 @@
 """
 Igor Batyukov
 
-Load RaM top locations with max number of residents to GreenPlum
+Load RaM top locations with max number of residents to DB
 
 """
 
@@ -14,8 +14,8 @@ from airflow.operators.bash import BashOperator
 from plugins.rick_and_morty_operator import IBatjukov10RamLocationsOperator
 
 DEFAULT_ARGS = {
-    'start_date': datetime(2022, 6, 1),
-    'end_date': datetime(2022, 7, 30),
+    'start_date': datetime(2022, 8, 1),
+    'end_date': datetime(2022, 9, 30),
     'owner': 'Igor Batyukov',
     'retries': 1,
     'poke_interval': 600
