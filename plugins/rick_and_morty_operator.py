@@ -36,7 +36,7 @@ class IBatjukov10RamLocationsOperator(BaseOperator):
         """
 
         csv_path = '/tmp/ram.csv'
-        hook = IBatjukov10RamLocationsHook('https://rickandmortyapi.com/')
+        hook = IBatjukov10RamLocationsHook('rick_and_morty')
         for page in range(hook.get_page_count()):
             for location in hook.get_locations_on_page(str(page + 1)):
                 self.locations_dict[location.get('id')] = len(location.get('residents'))
