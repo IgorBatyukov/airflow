@@ -1,23 +1,16 @@
 """
-Igor Batyukov
-
-My first custom Airflow operator
-
+Custom Airflow Operator for Rick&Morty API
 """
 
 import logging
 import csv
-from collections import defaultdict
-from plugins.rick_and_morty_hook import IBatjukov10RamLocationsHook
-from airflow.models.baseoperator import BaseOperator
 from typing import Sequence
+from collections import defaultdict
+from hooks.rick_and_morty_hook import RamLocationsHook
+from airflow.models.baseoperator import BaseOperator
 
 
-class IBatjukov10RamLocationsOperator(BaseOperator):
-
-    """
-    Returns csv file with selected number of locations with max residents in each of them
-    """
+class RamLocationsOperator(BaseOperator):
 
     ui_color = '#e0ffff'
     template_fields: Sequence[str] = ("execution_dt",)
@@ -36,9 +29,9 @@ class IBatjukov10RamLocationsOperator(BaseOperator):
         """
 
         csv_path = '/tmp/ram.csv'
-        hook = IBatjukov10RamLocationsHook('rick_and_morty')
+        hook = RamLocationsHook('rick_and_morty')
         for page in range(hook.get_page_count()):
-            for location in hook.get_locations_on_page(str(page + 1)):
+            for location in hook.get_locations_on_page(page + 1):
                 self.locations_dict[location.get('id')] = len(location.get('residents'))
                 logging.info(f"Location id:{location.get('id')} / Number of residents:{len(location.get('residents'))}")
 
@@ -47,7 +40,7 @@ class IBatjukov10RamLocationsOperator(BaseOperator):
             logging.info(f'Top {self.num_of_locations} locations with max number of residents')
             for num in range(self.num_of_locations):
                 loc_id = sorted(self.locations_dict.items(), key=lambda x: x[1], reverse=True)[num][0]
-                json_data = hook.get_final_json(str(loc_id))
+                json_data = hook.get_final_json(loc_id)
                 writer.writerow(
                     [self.execution_dt] + [json_data['id']] + [json_data['name']] +
                     [json_data['type']] + [json_data['dimension']] + [len(json_data['residents'])]
